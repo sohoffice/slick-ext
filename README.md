@@ -1,9 +1,10 @@
 Support some extension method for slick3.
 
-At the moment, only postgis point support was added.
+At the moment, only postgis point and play-json support was added.
 
 ## Installation
 
+libraryDependencies += "com.sohoffice" %% "slick-ext" % "0.0.2"
 
 ## Build
 

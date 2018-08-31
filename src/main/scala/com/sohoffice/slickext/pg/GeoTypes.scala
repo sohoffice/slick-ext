@@ -34,4 +34,25 @@ case class Point(
 
 object Point {
   implicit val pointFormat = Json.format[Point]
+
+  /** unapply LatLng in the following simple string format:
+    *
+    * lat,lon
+    *
+    * @param s
+    * @return
+    */
+  def unapplyLatLng(s: String): Option[Point] = {
+    s.split(",") match {
+      case parts if parts.size == 2 =>
+        try {
+          Some(Point(BigDecimal(parts(1)), BigDecimal(parts(0))))
+        } catch {
+          case _: NumberFormatException =>
+            None
+        }
+      case _ =>
+        None
+    }
+  }
 }
