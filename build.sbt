@@ -1,7 +1,7 @@
 
 inThisBuild(
   Seq(
-    version in ThisBuild := "0.0.4",
+    version in ThisBuild := "0.0.5",
     organization in ThisBuild := "com.sohoffice"
   )
 )

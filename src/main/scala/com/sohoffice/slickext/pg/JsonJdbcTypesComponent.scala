@@ -1,6 +1,6 @@
 package com.sohoffice.slickext.pg
 
-import java.io.StringReader
+import java.io.{BufferedReader, InputStreamReader, StringReader}
 import java.nio.charset.StandardCharsets
 import java.sql.{Clob, PreparedStatement, ResultSet, Types}
 
@@ -10,8 +10,6 @@ import play.api.libs.json.{JsValue, Json}
 import slick.SlickException
 import slick.ast.Type
 import slick.jdbc.{JdbcProfile, JdbcType, JdbcTypesComponent}
-
-import scala.io.Source
 
 trait JsonJdbcTypesComponent extends JdbcTypesComponent {
   self: JdbcProfile =>
@@ -44,8 +42,16 @@ trait JsonJdbcTypesComponent extends JdbcTypesComponent {
           logger.warn(s"PGobject with type: ${x.getType}")
           Json.parse(x.getValue)
         case x: Clob =>
-          val source = Source.fromInputStream(x.getAsciiStream, StandardCharsets.US_ASCII.name())
-          Json.parse(source.mkString)
+          val reader = new BufferedReader(x.getCharacterStream)
+          try {
+            val data = Stream.continually(reader.readLine())
+              .takeWhile(_ != null).mkString("\n")
+            Json.parse(data)
+          } finally {
+            if(reader!=null) {
+              reader.close()
+            }
+          }
         case null =>
           null
         case x =>

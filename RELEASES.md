@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+0.0.5
+-----
+
+- Support CLOB to store json with non-ascii characters.
+
 0.0.4
 -----
 

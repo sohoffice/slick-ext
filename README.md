@@ -4,7 +4,7 @@ At the moment, only postgis point and play-json support was added.
 
 ## Installation
 
-libraryDependencies += "com.sohoffice" %% "slick-ext" % "0.0.2"
+libraryDependencies += "com.sohoffice" %% "slick-ext" % "0.0.5"
 
 ## Build
 
